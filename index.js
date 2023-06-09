@@ -29,6 +29,14 @@ function node(data) {
     right: null,
   };
 }
+function minValue(node) {
+  let minimum = node;
+  while (node.left !== null) {
+    minimum = node.left;
+    node = node.left;
+  }
+  return minimum;
+}
 
 function tree() {
   return {
@@ -57,6 +65,42 @@ function tree() {
         return this.search(root.left, key);
       }
     },
+    insert: function (root, key) {
+      if (root === null) {
+        return new node(key);
+      }
+      if (key < root.data) {
+        root.left = this.insert(root.left, key);
+      } else if (key > root.data) {
+        root.right = this.insert(root.right, key);
+      }
+      return root;
+    },
+    deleteNode: function (node, key) {
+      if (node === null) {
+        return null;
+      }
+
+      if (key < node.value) {
+        node.left = deleteNode(node.lef, key);
+      } else if (key > node.value) {
+        node.right = deleteNode(node.right, key);
+      } else if (key === node.value) {
+        //no children + one child
+        if (node.left === null) {
+          return node.right;
+        } else if (node.right === null) {
+          return node.left;
+        }
+        //two children case
+        else if (node.right !== null && node.left !== null) {
+          let min = minValue(node.right);
+          node.value = min.value;
+          node.right = deleteNode(node.right, min.value);
+        }
+      }
+      return node;
+    },
   };
 }
 
@@ -65,10 +109,10 @@ let seif = [0, 2, 1, 0, 5, 0, 9, 5, 0, 2, 1, 0, 3];
 let arrayTree = sort(duplicate(seif));
 let total = tree();
 
-console.log(arrayTree);
+console.log(arrayTree); // [0, 1, 2, 3, 5, 9]
 let n = arrayTree.length;
-console.log(n);
-let root = total.buildTree(arrayTree, 0, n - 1);
+console.log(n); //6
+let root = total.buildTree(arrayTree, 0, n - 1); //2 0 1 5 3 9
 
 function print(node) {
   let result = "";
@@ -81,8 +125,11 @@ function print(node) {
   return result;
 }
 
-console.log(print(root));
+console.log(print(root)); //2 0 1 5 3 9
 
 let find = total.search(root, 9);
 
-console.log(find);
+console.log(find); //{data: 9, left: null, right: null}
+
+root = total.insert(root, 4);
+console.log(print(root));
