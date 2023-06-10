@@ -1,4 +1,5 @@
 let result = "";
+let resultDepth = 0;
 function duplicate(array) {
   let newArray = [];
   for (let i = 0; i < array.length; i++) {
@@ -74,10 +75,10 @@ function tree() {
         return;
       }
 
-      inOrder(node.left);
+      this.inOrder(node.left);
       result += node.value + " ";
 
-      inOrder(node.right);
+      this.inOrder(node.right);
     },
     preOrder: function (node) {
       if (node === null) {
@@ -86,24 +87,40 @@ function tree() {
 
       result += node.value;
 
-      preOrder(node.left);
-      preOrder(node.right);
+      this.preOrder(node.left);
+      this.preOrder(node.right);
     },
     postOrder: function (node) {
       if (node === null) {
         return;
       }
 
-      postOrder(node.left);
+      this.postOrder(node.left);
 
-      postOrder(node.right);
+      this.postOrder(node.right);
       result += node.value + " ";
     },
     height: function (node) {
       if (node === null) {
         return -1;
       }
-      return Math.max(height(node.left), height(node.right)) + 1;
+      return this.Math.max(height(node.left), height(node.right)) + 1;
+    },
+    //depth of node
+
+    resultDepth: function (root, key) {
+      if (root === null || root.value === key) {
+        return result;
+      }
+
+      if (key < root.value) {
+        result += 1;
+        return this.resultDepth(root.left, key);
+      } else if (key > root.value) {
+        result += 1;
+        return this.resultDepth(root.right, key);
+      }
+      return result;
     },
   };
 }
