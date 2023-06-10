@@ -124,6 +124,23 @@ function tree() {
         return this.resultDepth(root.right, key);
       }
       return result;
+    }, //checking balance
+    isBalanced: function (root) {
+      if (root === null) {
+        return true;
+      }
+
+      let lh = this.height(root.left);
+      let rh = this.height(root.right);
+
+      if (
+        Math.abs(lh - rh) <= 1 &&
+        this.isBalanced(root.left) === true &&
+        this.isBalanced(root.right) === true
+      ) {
+        return true;
+      }
+      return false;
     },
   };
 }

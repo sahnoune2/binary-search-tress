@@ -1,21 +1,25 @@
-//depth of node
-let result = 0;
-function resultDepth(root, key) {
-  if (root === null) {
-    return null;
+function height(node) {
+  if (node === null) {
+    return -1;
   }
-  if (root.value === key) {
-    return result;
+  return Math.max(height(node.left), height(node.right)) + 1;
+}
+//checking balance
+function isBalanced(root) {
+  if (root === null) {
+    return true;
   }
 
-  if (key < root.value) {
-    result += 1;
-    return resultDepth(root.left, key);
-  } else if (key > root.value) {
-    result += 1;
-    return resultDepth(root.right, key);
+  let lh = height(root.left);
+  let rh = height(root.right);
+
+  if (
+    Math.abs(lh - rh) <= 1 &&
+    isBalanced(root.left === true && isBalanced(root.right === true))
+  ) {
+    return true;
   }
-  return result;
+  return false;
 }
 const tree = {
   value: 4,
