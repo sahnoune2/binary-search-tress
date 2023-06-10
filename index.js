@@ -99,6 +99,12 @@ function tree() {
       postOrder(node.right);
       result += node.value + " ";
     },
+    height: function (node) {
+      if (node === null) {
+        return -1;
+      }
+      return Math.max(height(node.left), height(node.right)) + 1;
+    },
   };
 }
 
