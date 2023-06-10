@@ -1,7 +1,10 @@
 //depth of node
-
+let result = 0;
 function resultDepth(root, key) {
-  if (root === null || root.value === key) {
+  if (root === null) {
+    return null;
+  }
+  if (root.value === key) {
     return result;
   }
 
@@ -44,4 +47,4 @@ const tree = {
   },
 };
 
-console.log(depth(tree, 7)); // Output: 1 2 3 4 5 6 7
+console.log(resultDepth(tree, 100)); // Output: 1 2 3 4 5 6 7

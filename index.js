@@ -109,7 +109,10 @@ function tree() {
     //depth of node
 
     resultDepth: function (root, key) {
-      if (root === null || root.value === key) {
+      if (root === null) {
+        return null;
+      }
+      if (root.value === key) {
         return result;
       }
 
