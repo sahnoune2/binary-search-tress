@@ -1,3 +1,4 @@
+let result = "";
 function duplicate(array) {
   let newArray = [];
   for (let i = 0; i < array.length; i++) {
@@ -28,14 +29,6 @@ function node(data) {
     left: null,
     right: null,
   };
-}
-function minValue(node) {
-  let minimum = node;
-  while (node.left !== null) {
-    minimum = node.left;
-    node = node.left;
-  }
-  return minimum;
 }
 
 function tree() {
@@ -76,52 +69,35 @@ function tree() {
       }
       return root;
     },
-    deleteNode: function (node, key) {
+    inOrder: function (node) {
       if (node === null) {
-        return null;
+        return;
       }
 
-      if (key < node.value) {
-        node.left = deleteNode(node.lef, key);
-      } else if (key > node.value) {
-        node.right = deleteNode(node.right, key);
-      } else if (key === node.value) {
-        //no children + one child
-        if (node.left === null) {
-          return node.right;
-        } else if (node.right === null) {
-          return node.left;
-        }
-        //two children case
-        else if (node.right !== null && node.left !== null) {
-          let min = minValue(node.right);
-          node.value = min.value;
-          node.right = deleteNode(node.right, min.value);
-        }
-      }
-      return node;
+      inOrder(node.left);
+      result += node.value + " ";
+
+      inOrder(node.right);
     },
-    levelOrder: function (node) {
+    preOrder: function (node) {
       if (node === null) {
-        return null;
+        return;
       }
 
-      let result = [];
-      let queue = [node];
+      result += node.value;
 
-      while (queue.length > 0) {
-        const currentNode = queue.shift();
-
-        result.push(currentNode.value);
-
-        if (currentNode.left !== null) {
-          queue.push(currentNode.left);
-        }
-        if (currentNode.right !== null) {
-          queue.push(currentNode.right);
-        }
+      preOrder(node.left);
+      preOrder(node.right);
+    },
+    postOrder: function (node) {
+      if (node === null) {
+        return;
       }
-      return result;
+
+      postOrder(node.left);
+
+      postOrder(node.right);
+      result += node.value + " ";
     },
   };
 }
@@ -155,3 +131,36 @@ console.log(find); //{data: 9, left: null, right: null}
 
 root = total.insert(root, 4);
 console.log(print(root));
+
+// const tree = {
+//   value: 4,
+//   left: {
+//     value: 2,
+//     left: {
+//       value: 1,
+//       left: null,
+//       right: null,
+//     },
+//     right: {
+//       value: 3,
+//       left: null,
+//       right: null,
+//     },
+//   },
+//   right: {
+//     value: 6,
+//     left: {
+//       value: 5,
+//       left: null,
+//       right: null,
+//     },
+//     right: {
+//       value: 7,
+//       left: null,
+//       right: null,
+//     },
+//   },
+// };
+
+// postOrder(tree);
+// console.log(result.trim()); // Output: 1 2 3 4 5 6 7
